@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-// setup defaults for error handling here
+axios.interceptors.response.use(null, error => {
+  const expectedError =
+    error.response && error.response.status >= 400 && error.response.status < 500;
+
+  if (!expectedError) {
+    console.log(error);
+  }
+
+  return Promise.reject(error);
+});
 
 function setToken(token) {
   axios.defaults.headers.common['Authorization'] = token;
