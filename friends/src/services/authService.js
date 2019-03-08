@@ -5,8 +5,9 @@ const tokenKey = 'token';
 
 http.setToken(getCurrentUser());
 
-export async function login(username, password) {
-  const { data: token } = await http.post(apiEndpoint, { username, password });
+export async function login(credentials) {
+  const { data } = await http.post(apiEndpoint, credentials);
+  const token = data.payload;
   localStorage.setItem(tokenKey, token);
 }
 
