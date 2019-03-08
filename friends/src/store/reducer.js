@@ -12,3 +12,7 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+// login start
+// login success
+// login failure
