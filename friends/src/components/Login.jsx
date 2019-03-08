@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../store/actions';
 
-const Login = () => {
+const Login = ({ login, location, history }) => {
   //  if logged in, redirect to FriendsList
-  const [credentials, setCredentials] = useState({});
+  const [credentials, setCredentials] = useState({
+    username: 'Lambda School',
+    password: 'i<3Lambd4'
+  });
 
   const handleChange = e => {
     const { name, value } = e.target;
     setCredentials(values => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    try {
+      await login(credentials);
+      const { state } = location;
+      const destination = state ? state.from.pathname : '/';
+      history.replace(destination);
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   return (
@@ -36,4 +49,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(
+  null,
+  { login }
+)(Login);
