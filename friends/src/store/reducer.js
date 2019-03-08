@@ -1,4 +1,8 @@
+import auth from '../services/authService';
+
 const initialState = {
+  isLoggedIn: !!auth.getCurrentUser() || false,
+  isLoggingIn: false,
   friends: []
 };
 
